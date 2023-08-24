@@ -21,13 +21,13 @@ int _putsfd(char *str, int fd)
 }
 
 /**
- * _Putfd - Writes the char c to given fd
+ * _putfd - Writes the char c to given fd
  * @c: The char to print
  * @fd: The filedescriptor to write to
  * Return: 1. On success
  * On error, return if it's -1, and errno is set appropriately.
  */
-int _Putfd(char c, int fd)
+int _putfd(char c, int fd)
 {
 	static int s;
 	static char buf[WRITE_BUF_SIZE];
@@ -43,13 +43,13 @@ int _Putfd(char c, int fd)
 }
 
 /**
- * _ePutchar - Writes the char c to stderr
+ * _eputchar - Writes the char c to stderr
  * @c: The char to print
  *
  * Return:1. On success
  * On error, return if it's -1, and errno is set appropriately.
  */
-int _Eputchar(char c)
+int _eputchar(char c)
 {
 	static int a;
 	static char buf[WRITE_BUF_SIZE];
@@ -65,12 +65,12 @@ int _Eputchar(char c)
 }
 
 /**
- * _ePuts - Prints an input str
+ * _eputs - Prints an input str
  * @Str: the str to be printed
  *
  * Return: Void
  */
-void _ePuts(char *Str)
+void _eputs(char *Str)
 {
 	int s = 0;
 

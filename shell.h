@@ -51,23 +51,26 @@ typedef struct liststr
 } list_t;
 
 /**
- *Struct passinfo - contains pseudo-arguements to pass into a function,
+ *struct passinfo - contains pseudo-arguements to pass into a function,
  *Allowing uniform prototype for function pointer struct
- *@Arg: a string generated from getline containing arguements
- *@Argv: an array of strings generated from arg
- *@Path: a string path for the current command
- *@Argc: the argument count
- *@Fname: the program filename
- *@Env: linked list local copy of environ
- *@Environ: custom modified copy of environ from LL env
- *@History: the history node
- *@Alias: the alias node
- *@Env_changed: on if environ was changed
- *@Status: the return status of the last exec'd command
- *@Cmd_buf: address of pointer to cmd_buf, on if chaining
- *@Cmd_buf_type: CMD_type ||, &&, ;
- *@Readfd: the fd from which to read line input
- *@Histcount: the history line number count
+ *@arg: a string generated from getline containing arguements
+ *@argv: an array of strings generated from arg
+ *@path: a string path for the current command
+ *@argc: the argument count
+ *@fname: the program filename
+ *@env: linked list local copy of environ
+ *@environ: custom modified copy of environ from LL env
+ *@history: the history node
+ *@alias: the alias node
+ *@env_changed: on if environ was changed
+ *@status: the return status of the last exec'd command
+ *@cmd_buf: address of pointer to cmd_buf, on if chaining
+ *@cmd_buf_type: CMD_type ||, &&, ;
+ *@readfd: the fd from which to read line input
+ *@histcount: the history line number count
+ *@line_count: the error count
+ *@err_num: the error code for exit()s
+ *@linecount_flag: if on count this line of input
  */
 typedef struct passinfo
 {
