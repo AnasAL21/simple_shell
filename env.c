@@ -1,16 +1,33 @@
 #include "shell.h"
 
 /**
- * _Unsetenv - Remove an environment variable
- * @Info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: 1 on delete, 0 otherwise
+ * get_environ - Returns the str array copy of our environ
+ * @info: Struc containing potential arg. Used to maintain
+ *          const function prototype.
+ * Return: 0 Always
+ */
+char **get_environ(info_t *info)
+{
+	if (!info->environ || info->env_changed)
+	{
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
+	}
+
+	return (info->environ);
+}
+
+/**
+ * _unsetenv - Remove an environment var
+ * @info: Structure containing potential arg. Used to maintain
+ *        const function prototype.
+ *  Return: delete 1 on, otherwise 0
  * @var: the string env var property
  */
-int _Unsetenv(info_t *Info, char *var)
+int _unsetenv(info_t *info, char *var)
 {
-	list_t *node = Info->env;
-	size_t x = 0;
+	list_t *node = info->env;
+	size_t a = 0;
 	char *p;
 
 	if (!node || !var)
@@ -21,27 +38,27 @@ int _Unsetenv(info_t *Info, char *var)
 		p = starts_with(node->str, var);
 		if (p && *p == '=')
 		{
-			Info->env_changed = delete_node_at_index(&(Info->env), x);
-			x = 0;
-			node = Info->env;
+			info->env_changed = delete_node_at_index(&(info->env), a);
+			a = 0;
+			node = info->env;
 			continue;
 		}
 		node = node->next;
-		x++;
+		a++;
 	}
-	return (Info->env_changed);
+	return (info->env_changed);
 }
 
 /**
- * _Setenv - Initialize a new environment variable,
+ * _setenv - Initialize a new environment var,
  *             or modify an existing one
- * @Info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- * @var: the string env var property
+ * @info: Struct containing potential arg. Used to maintain
+ *        const function prototype.
+ * @var: the str env var property
  * @value: the string env var value
- *  Return: Always 0
+ *  Return: 0 Always
  */
-int _Setenv(info_t *Info, char *var, char *value)
+int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
 	list_t *node;
@@ -56,7 +73,7 @@ int _Setenv(info_t *Info, char *var, char *value)
 	_strcpy(buf, var);
 	_strcat(buf, "=");
 	_strcat(buf, value);
-	node = Info->env;
+	node = info->env;
 	while (node)
 	{
 		p = starts_with(node->str, var);
@@ -64,30 +81,13 @@ int _Setenv(info_t *Info, char *var, char *value)
 		{
 			free(node->str);
 			node->str = buf;
-			Info->env_changed = 1;
+			info->env_changed = 1;
 			return (0);
 		}
 		node = node->next;
 	}
-	add_node_end(&(Info->env), buf, 0);
+	add_node_end(&(info->env), buf, 0);
 	free(buf);
-	Info->env_changed = 1;
+	info->env_changed = 1;
 	return (0);
-}
-
-/**
- * Get_environ - Returns the string array copy of our environ
- * @Info: Struc containing potential arguments. Used to maintain
- *          const function prototype.
- * Return: 0
- */
-char **Get_environ(info_t *Info)
-{
-	if (!Info->environ || Info->env_changed)
-	{
-		Info->environ = list_to_strings(Info->env);
-		Info->env_changed = 0;
-	}
-
-	return (Info->environ);
 }
