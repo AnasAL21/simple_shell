@@ -24,7 +24,7 @@ char *_Strncat(char *Dest, char *Src, int N)
 		b++;
 	}
 	if (b < N)
-		dest[a] = '\0';
+		Dest[a] = '\0';
 	return (s);
 }
 
@@ -67,7 +67,7 @@ char *_Strncpy(char *Dest, char *Src, int N)
 		b = a;
 		while (b < N)
 		{
-			Dest[B] = '\0';
+			Dest[b] = '\0';
 			b++;
 		}
 	}

@@ -14,7 +14,7 @@ ssize_t Get_input(info_t *Info)
 	char **buf_p = &(Info->arg), *p;
 
 	_putchar(BUF_FLUSH);
-	r = input_buf(Info, &buf, &len);
+	r = Input_buf(Info, &buf, &len);
 	if (r == -1)
 		return (-1);
 	if (len)
@@ -48,11 +48,11 @@ ssize_t Get_input(info_t *Info)
  * read_buf - reads a buffer
  * @info: parameter struct
  * @buf: buffer
- * @i: size
+ * @a: size
  *
  * Return: r
  */
-ssize_t read_buf(info_t *info, char *buf, size_t *i)
+ssize_t read_buf(info_t *info, char *buf, size_t *a)
 {
 	ssize_t r = 0;
 
@@ -124,14 +124,14 @@ void SigintHandler(__attribute__((unused))int sig_num)
 	_putchar(BUF_FLUSH);
 }
 /**
- * input_buf - buffers chained commands
+ * Input_buf - buffers chained commands
  * @Info: parameter struct
  * @buf: address of buffer
  * @len: address of len var
  *
  * Return: bytes read
  */
-ssize_t input_buf(info_t *Info, char **buf, size_t *len)
+ssize_t Input_buf(info_t *Info, char **buf, size_t *len)
 {
 	ssize_t r = 0;
 	size_t len_p = 0;

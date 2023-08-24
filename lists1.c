@@ -13,7 +13,7 @@ ssize_t Get_node_index(list_t *head, list_t *node)
 	while (head)
 	{
 		if (head == node)
-			return (i);
+			return (a);
 		head = head->next;
 		a++;
 	}

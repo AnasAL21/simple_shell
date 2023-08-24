@@ -13,13 +13,13 @@ void *_Realloc(void *Ptr, unsigned int Old_size, unsigned int New_size)
 	char *s;
 
 	if (!Ptr)
-		return (malloc(new_size));
+		return (malloc(New_size));
 	if (!New_size)
 		return (free(Ptr), NULL);
 	if (New_size == Old_size)
 		return (Ptr);
 
-	p = malloc(New_size);
+	s = malloc(New_size);
 	if (!s)
 		return (NULL);
 
@@ -57,6 +57,6 @@ char *_Memset(char *a, char b, unsigned int n)
 	unsigned int x;
 
 	for (x = 0; x < n; x++)
-		s[x] = b;
+		a[x] = b;
 	return (a);
 }

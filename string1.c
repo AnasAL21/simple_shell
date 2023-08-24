@@ -80,7 +80,7 @@ char *_Strcpy(char *Dest, char *Src)
 	while (Src[a])
 	{
 		Dest[a] = Src[a];
-		i++;
+		a++;
 	}
 	Dest[a] = 0;
 	return (Dest);

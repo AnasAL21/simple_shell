@@ -20,7 +20,7 @@ int Replace_string(char **Old, char *new)
  *
  * Return: 1 if replaced, otherwise 0
  */
-int Replace_vars(Info_t *Info)
+int Replace_vars(info_t *Info)
 {
 	int a = 0;
 	list_t *node;
@@ -73,7 +73,7 @@ void Check_chain(info_t *Info, char *Buf, size_t *P, size_t a, size_t Len)
 	{
 		if (Info->status)
 		{
-			buf[a] = 0;
+			Buf[a] = 0;
 			b = Len;
 		}
 	}
@@ -95,7 +95,7 @@ void Check_chain(info_t *Info, char *Buf, size_t *P, size_t a, size_t Len)
  *
  *Return: if replaced 1, otherwise 0
  */
-int Replace_alias(Info_t *Info)
+int Replace_alias(info_t *Info)
 {
 	int a;
 	list_t *node;
@@ -120,15 +120,15 @@ int Replace_alias(Info_t *Info)
 
 /**
  *Is_chain - Test if current character in buffer is a chain delimeter
- *@Info: The parameter struct
- *@Buf: The char buffer
+ *@info: The parameter struct
+ *@buf: The char buffer
  *@P: Address of current position in buf
  *
  *Return: if chain delimeter then 1, otherwise 0
  */
-int Is_chain(info_t *Info, char *Buf, size_t *P)
+int Is_chain(info_t *info, char *buf, size_t *P)
 {
-	size_t a = *p;
+	size_t a = *P;
 
 	if (buf[a] == '|' && buf[a + 1] == '|')
 	{

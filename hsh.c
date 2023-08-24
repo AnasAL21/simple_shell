@@ -6,7 +6,7 @@
  *
  * Return: void
  */
-void Fork_cmd(Info_t *Info)
+void Fork_cmd(info_t *Info)
 {
 	pid_t child_pid;
 
@@ -44,7 +44,7 @@ void Fork_cmd(Info_t *Info)
  *
  * Return: Void.
  */
-void Find_cmd(Info_t *Info)
+void Find_cmd(info_t *Info)
 {
 	char *path = NULL;
 	int a, b;
@@ -89,7 +89,7 @@ void Find_cmd(Info_t *Info)
  * 1 if builtin found but not successful,
  * 2 if builtin signals exit()
  */
-int Find_builtin(Info_t *Info)
+int Find_builtin(info_t *Info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
@@ -121,7 +121,7 @@ int Find_builtin(Info_t *Info)
  *
  * Return: on success put 0, on error put 1, or error code
  */
-int Hsh(Info_t *Info, char **Av)
+int Hsh(info_t *Info, char **Av)
 {
 	ssize_t i = 0;
 	int builtin_ret = 0;

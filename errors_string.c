@@ -2,19 +2,19 @@
 
 /**
  * _Putsfd - Prints an input str
- * @Str: The str to be printed
+ * @str: The str to be printed
  * @fd: The filedescriptor to write to
  * Return: the num of chars put
  */
-int _Putsfd(char *Str, int fd)
+int _Putsfd(char *str, int fd)
 {
 	int a = 0;
 
-	if (!Str)
+	if (!str)
 		return (0);
-	while (*Str)
+	while (*str)
 	{
-		a += _putsfd(*Str++, fd);
+		a += _putsfd(*str++, fd);
 	}
 	return (a);
 }
@@ -77,7 +77,7 @@ void _ePuts(char *Str)
 		return;
 	while (Str[s] != '\0')
 	{
-		_ePutchar(Str[s]);
+		_eputchar(Str[s]);
 		s++;
 	}
 }
