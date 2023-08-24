@@ -17,7 +17,7 @@ int _Myalias(info_t *Info)
 		node = Info->alias;
 		while (node)
 		{
-			print_alias(node);
+			print_list(node);
 			node = node->next;
 		}
 		return (0);
@@ -46,7 +46,7 @@ int Print_alias(list_t *Node)
 
 	if (Node)
 	{
-		s = _strchr(node->str, '=');
+		s = _strchr(Node->str, '=');
 		for (i = node->str; i <= s; i++)
 		_putchar(*i);
 		_putchar('\'');
@@ -64,7 +64,7 @@ int Print_alias(list_t *Node)
  *
  * Return: Always on success 0 , on error 1
  */
-int Unset_alias(Info_t *Info, char *Str)
+int Unset_alias(info_t *Info, char *Str)
 {
 	char *s, a;
 	int ret;
@@ -87,7 +87,7 @@ int Unset_alias(Info_t *Info, char *Str)
  *
  * Return: Always 0 on success, 1 on error
  */
-int Set_alias(Info_t *Info, char *Str)
+int Set_alias(info_t *Info, char *Str)
 {
 	char *s;
 
@@ -108,7 +108,7 @@ int Set_alias(Info_t *Info, char *Str)
  *        const function prototype.
  *  Return: Always 0
  */
-int _Myhistory(Info_t *Info)
+int _Myhistory(info_t *Info)
 {
 	print_list(Info->history);
 	return (0);

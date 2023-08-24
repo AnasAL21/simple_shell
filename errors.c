@@ -33,7 +33,7 @@ int Print_d(int Input, int fd)
 
 	if (fd == STDERR_FILENO)
 		__putchar = _eputchar;
-	if (input < 0)
+	if (Input < 0)
 	{
 		_abs_ = -Input;
 		__putchar('-');
@@ -101,13 +101,13 @@ char *Convert_number(long int Num, int Base, int Flags)
  */
 void Print_error(info_t *Info, char *Estr)
 {
-	_ePuts(Enfo->fname);
-	_ePuts(": ");
+	_eputs(Info->fname);
+	_eputs(": ");
 	print_d(Info->line_count, STDERR_FILENO);
-	_ePuts(": ");
-	_ePuts(Info->argv[0]);
-	_ePuts(": ");
-	_ePuts(estr);
+	_eputs(": ");
+	_eputs(Info->argv[0]);
+	_eputs(": ");
+	_eputs(Estr);
 }
 
 /**

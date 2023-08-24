@@ -32,7 +32,7 @@ int Replace_vars(info_t *Info)
 
 		if (!_strcmp(Info->argv[a], "$?"))
 		{
-			Replace_string(&(Info->argv[i]),
+			Replace_string(&(Info->argv[a]),
 					_strdup(convert_number(Info->status, 10, 0)));
 			continue;
 		}
@@ -113,7 +113,7 @@ int Replace_alias(info_t *Info)
 		p = _strdup(p + 1);
 		if (!p)
 			return (0);
-		info->argv[0] = p;
+		Info->argv[0] = p;
 	}
 	return (1);
 }

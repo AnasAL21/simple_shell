@@ -18,7 +18,7 @@ char **Strtow(char *Str, char *i)
 	if (!i)
 		i = " ";
 	for (a = 0; Str[a] != '\0'; a++)
-		if (!is_delim(Str[a], i) && (is_delim(str[a + 1], i) || !str[a + 1]))
+		if (!is_delim(Str[a], i) && (is_delim(Str[a + 1], i) || !Str[a + 1]))
 			Numwords++;
 
 	if (Numwords == 0)
@@ -65,7 +65,7 @@ char **Strtow2(char *Str, char i)
 		return (NULL);
 	for (a = 0; Str[a] != '\0'; a++)
 		if ((Str[a] != i && Str[a + 1] == i) ||
-				    (str[a] != i && !str[a + 1]) || str[a + 1] == i)
+				    (Str[a] != i && !str[a + 1]) || str[a + 1] == i)
 			Numwords++;
 	if (Numwords == 0)
 		return (NULL);
