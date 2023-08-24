@@ -145,7 +145,7 @@ char **strtow2(char *, char);
 void _eputs(char *);
 int _eputchar(char);
 int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
+int _putsfd(char *Str, int fd);
 
 /* memory.c */
 char *_memset(char *, char, unsigned int);

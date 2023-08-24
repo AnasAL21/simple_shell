@@ -1,22 +1,23 @@
 #include "shell.h"
 
 /**
- * _Putsfd - Prints an input str
- * @str: The str to be printed
- * @fd: The filedescriptor to write to
- * Return: the num of chars put
+ * _putsfd - prints an input string
+ * @str: the string to be printed
+ * @fd: the filedescriptor to write to
+ *
+ * Return: the number of chars put
  */
-int _Putsfd(char *str, int fd)
+int _putsfd(char *str, int fd)
 {
-	int a = 0;
+	int i = 0;
 
 	if (!str)
 		return (0);
 	while (*str)
 	{
-		a += _putsfd(*str++, fd);
+		i += _putfd(*str++, fd);
 	}
-	return (a);
+	return (i);
 }
 
 /**

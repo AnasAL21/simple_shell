@@ -52,7 +52,7 @@ char *_Getenv(info_t *Info, const char *Name)
 
 	while (node)
 	{
-		s = starts_with(node->str, name);
+		s = starts_with(node->str, Name);
 		if (s && *s)
 			return (s);
 		node = node->next;

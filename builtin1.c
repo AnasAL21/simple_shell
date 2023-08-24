@@ -1,56 +1,79 @@
 #include "shell.h"
 
 /**
- * _Myalias - Mimics the alias builtin (man alias)
- * @Info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: Always 0
+ * _myhistory - Displays the history list, one command by line, preceded
+ *              with line num, starting at 0.
+ * @info: Struct containing potential arg. Used to maintain
+ *        const function prototype.
+ *  Return: 0 Always
  */
-int _Myalias(info_t *Info)
+int _myhistory(info_t *info)
 {
-	int a = 0;
-	char *s = NULL;
-	list_t *node = NULL;
-
-	if (Info->argc == 1)
-	{
-		node = Info->alias;
-		while (node)
-		{
-			print_list(node);
-			node = node->next;
-		}
-		return (0);
-	}
-	for (a = 1; Info->argv[a]; a++)
-	{
-		s = _strchr(Info->argv[a], '=');
-		if (s)
-			set_alias(Info, Info->argv[a]);
-		else
-			print_alias(node_starts_with(Info->alias, Info->argv[a], '='));
-	}
-
+	print_list(info->history);
 	return (0);
 }
 
 /**
- * Print_alias - Prints an alias string
- * @Node: The alias node
+ * unset_alias - Sets alias to str
+ * @info: parameter structure
+ * @str: the str alias
  *
- * Return: Always on success 0, on error 1
+ * Return:0 Always on success, 1 on error
  */
-int Print_alias(list_t *Node)
+int unset_alias(info_t *info, char *str)
 {
-	char *s = NULL, *i = NULL;
+	char *p, c;
+	int ret;
 
-	if (Node)
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	c = *p;
+	*p = 0;
+	ret = delete_node_at_index(&(info->alias),
+		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	*p = c;
+	return (ret);
+}
+
+/**
+ * set_alias - sets alias to string
+ * @info: parameter struct
+ * @str: the string alias
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+int set_alias(info_t *info, char *str)
+{
+	char *p;
+
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	if (!*++p)
+		return (unset_alias(info, str));
+
+	unset_alias(info, str);
+	return (add_node_end(&(info->alias), str, 0) == NULL);
+}
+
+/**
+ * print_alias - Prints an alias str
+ * @node: The alias node
+ *
+ * Return:0 Always on success, 1 on error
+ */
+int print_alias(list_t *node)
+{
+	char *p = NULL, *a = NULL;
+
+	if (node)
 	{
-		s = _strchr(Node->str, '=');
-		for (i = node->str; i <= s; i++)
-		_putchar(*i);
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+		_putchar(*a);
 		_putchar('\'');
-		_puts(s + 1);
+		_puts(p + 1);
 		_puts("'\n");
 		return (0);
 	}
@@ -58,58 +81,36 @@ int Print_alias(list_t *Node)
 }
 
 /**
- * Unset_alias - Sets alias to str
- * @Info: Parameter structure
- * @Str: the str alias
- *
- * Return: Always on success 0 , on error 1
+ * _myalias - Mimics the alias builtin 
+ * @info: Structure containing potential arg. Used to maintain
+ *          const function prototype.
+ *  Return: 0 Always
  */
-int Unset_alias(info_t *Info, char *Str)
+int _myalias(info_t *info)
 {
-	char *s, a;
-	int ret;
+	int a = 0;
+	char *p = NULL;
+	list_t *node = NULL;
 
-	p = _strchr(Str, '=');
-	if (!s)
-		return (1);
-	a = *s;
-	*s = 0;
-	ret = delete_node_at_index(&(Info->alias),
-		get_node_index(Info->alias, node_starts_with(Info->alias, Str, -1)));
-	*s = a;
-	return (ret);
-}
+	if (info->argc == 1)
+	{
+		node = info->alias;
+		while (node)
+		{
+			print_alias(node);
+			node = node->next;
+		}
+		return (0);
+	}
+	for (a = 1; info->argv[a]; a++)
+	{
+		p = _strchr(info->argv[a], '=');
+		if (p)
+			set_alias(info, info->argv[a]);
+		else
+			print_alias(node_starts_with(info->alias, info->argv[a], '='));
+	}
 
-/**
- * Set_alias - Sets alias to str
- * @Info: parameter struct
- * @Str: the string alias
- *
- * Return: Always 0 on success, 1 on error
- */
-int Set_alias(info_t *Info, char *Str)
-{
-	char *s;
-
-	p = _strchr(Str, '=');
-	if (!s)
-		return (1);
-	if (!*++s)
-		return (unset_alias(Info, Str));
-
-	unset_alias(info, Str);
-	return (add_node_end(&(Info->alias), Str, 0) == NULL);
-}
-
-/**
- * _Myhistory - displays the history list, one command by line, preceded
- *              with line num, starting at 0.
- * @Info: Structure containing potential arg. Used to maintain
- *        const function prototype.
- *  Return: Always 0
- */
-int _Myhistory(info_t *Info)
-{
-	print_list(Info->history);
 	return (0);
 }
+

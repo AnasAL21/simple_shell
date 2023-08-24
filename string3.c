@@ -65,7 +65,7 @@ char **Strtow2(char *Str, char i)
 		return (NULL);
 	for (a = 0; Str[a] != '\0'; a++)
 		if ((Str[a] != i && Str[a + 1] == i) ||
-				    (Str[a] != i && !str[a + 1]) || str[a + 1] == i)
+				    (Str[a] != i && !Str[a + 1]) || Str[a + 1] == i)
 			Numwords++;
 	if (Numwords == 0)
 		return (NULL);
@@ -74,10 +74,10 @@ char **Strtow2(char *Str, char i)
 		return (NULL);
 	for (a = 0, b = 0; b < Numwords; b++)
 	{
-		while (str[a] == i && Str[a] != i)
+		while (Str[a] == i && Str[a] != i)
 			a++;
 		d = 0;
-		while (Str[a + d] != i && Str[a + d] && str[a + d] != i)
+		while (Str[a + d] != i && Str[a + d] && Str[a + d] != i)
 			d++;
 		s[b] = malloc((d + 1) * sizeof(char));
 		if (!s[b])
@@ -88,7 +88,7 @@ char **Strtow2(char *Str, char i)
 			return (NULL);
 		}
 		for (e = 0; e < d; e++)
-			s[b][e] = str[a++];
+			s[b][e] = Str[a++];
 		s[b][e] = 0;
 	}
 	s[b] = NULL;

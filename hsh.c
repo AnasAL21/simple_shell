@@ -61,7 +61,7 @@ void Find_cmd(info_t *Info)
 	if (!b)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), Info->argv[0]);
+	path = find_path(Info, _getenv(Info, "PATH="), Info->argv[0]);
 	if (path)
 	{
 		Info->path = path;
@@ -91,7 +91,7 @@ void Find_cmd(info_t *Info)
  */
 int Find_builtin(info_t *Info)
 {
-	int i, built_in_ret = -1;
+	int a, built_in_ret = -1;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
 		{"env", _myenv},
@@ -104,8 +104,8 @@ int Find_builtin(info_t *Info)
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtintbl[a].type; a++)
-		if (_strcmp(info->argv[0], builtintbl[a].type) == 0)
+	for (a = 0; builtintbl[a].type; a++)
+		if (_strcmp(Info->argv[0], builtintbl[a].type) == 0)
 		{
 			Info->line_count++;
 			built_in_ret = builtintbl[a].func(Info);
@@ -117,11 +117,11 @@ int Find_builtin(info_t *Info)
 /**
  * Hsh - Main shell loop
  * @Info: The parameter & return info struct
- * @Av: The arg vector from main()
+ * @av: The arg vector from main()
  *
  * Return: on success put 0, on error put 1, or error code
  */
-int Hsh(info_t *Info, char **Av)
+int Hsh(info_t *Info, char **av)
 {
 	ssize_t i = 0;
 	int builtin_ret = 0;
