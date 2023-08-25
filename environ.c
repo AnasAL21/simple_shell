@@ -1,92 +1,93 @@
 #include "shell.h"
 
 /**
- * Populate_env_list - Populates env linked list
- * @Info: Struc containing potential arg. Used to maintain
+ * _myenv - Prints the current environment
+ * @info: Struct containing potential arg. Used to maintain
  *          const function prototype.
- * Return:0 Always
+ * Return: 0 Always
  */
-int Populate_env_list(info_t *Info)
+int _myenv(info_t *info)
 {
-	list_t *node = NULL;
-	size_t s;
-
-	for (s = 0; environ[s]; s++)
-		add_node_end(&node, environ[s], 0);
-	Info->env = node;
+	print_list_str(info->env);
 	return (0);
 }
 
 /**
- * _Myunsetenv - Remove an envir var
- * @Info: Structure containing potential arg. Used to maintain
- *        constant function prototype.
- * Return: Always 0
- */
-int _Myunsetenv(info_t *Info)
-{
-	int s;
-
-	if (Info->argc == 1)
-	{
-		_eputs("Too few arguements.\n");
-		return (1);
-	}
-	for (s = 1; s <= Info->argc; s++)
-		_unsetenv(Info, Info->argv[s]);
-
-	return (0);
-}
-
-/**
- *_Getenv - Gets the value of an environ var
- *@Info: Structure containing potential arg. Used to maintain
- *@Name: env var name
+ * _getenv - Gets the value of an environ var
+ * @info: Struct containing potential arg. Used to maintain
+ * @name: env var name
  *
- *Return: the value
+ * Return: the value
  */
-char *_Getenv(info_t *Info, const char *Name)
+char *_getenv(info_t *info, const char *name)
 {
-	list_t *node = Info->env;
-	char *s;
+	list_t *node = info->env;
+	char *p;
 
 	while (node)
 	{
-		s = starts_with(node->str, Name);
-		if (s && *s)
-			return (s);
+		p = starts_with(node->str, name);
+		if (p && *p)
+			return (p);
 		node = node->next;
 	}
 	return (NULL);
 }
 
 /**
- * _Mysetenv - Initialize a new environment variable,
+ * _mysetenv - Initialize a new environment variable,
  *             or modify an existing one
- * @Info: StrucT containing potential arg. Used to maintain
+ * @info: Struct containing potential arg. Used to maintain
  *        const function prototype.
- * Return: Always 0
+ *  Return: 0 Always
  */
-int _Mysetenv(info_t *Info)
+int _mysetenv(info_t *info)
 {
-	if (Info->argc != 3)
+	if (info->argc != 3)
 	{
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (_setenv(Info, Info->argv[1], Info->argv[2]))
+	if (_setenv(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }
 
 /**
- *_Myenv - Prints the current environM
- *@Info: Struc containing potential arg. Used to maintain
- *          const function prototype.
- *Return: Always 0
+ * _myunsetenv - Remove an environment var
+ * @info: Struc containing potential arg. Used to maintain
+ *        const function prototype.
+ * Return: 0 Always
  */
-int _Myenv(info_t *Info)
+int _myunsetenv(info_t *info)
 {
-	print_list_str(Info->env);
+	int a;
+
+	if (info->argc == 1)
+	{
+		_eputs("Too few arguements.\n");
+		return (1);
+	}
+	for (a = 1; a <= info->argc; a++)
+		_unsetenv(info, info->argv[a]);
+
 	return (0);
 }
+
+/**
+ * populate_env_list - populates env linked list
+ * @info: Struct containing potential arg. Used to maintain
+ *          const function prototype.
+ * Return: 0 Always
+ */
+int populate_env_list(info_t *info)
+{
+	list_t *node = NULL;
+	size_t a;
+
+	for (a = 0; environ[a]; a++)
+		add_node_end(&node, environ[a], 0);
+	info->env = node;
+	return (0);
+}
+

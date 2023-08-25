@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * clear_info - Initializes info_t struct
+ * clear_info - Initializes info_t struture
  * @info: Structure address
  */
 void clear_info(info_t *info)
@@ -13,8 +13,8 @@ void clear_info(info_t *info)
 }
 
 /**
- * set_info - Initializes info_t struct
- * @info: Structure address
+ * set_info - Initializes info_t structure
+ * @info: structure address
  * @av: arg vector
  */
 void set_info(info_t *info, char **av)
@@ -71,3 +71,4 @@ void free_info(info_t *info, int all)
 		_putchar(BUF_FLUSH);
 	}
 }
+

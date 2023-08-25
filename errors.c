@@ -1,46 +1,74 @@
 #include "shell.h"
 
 /**
- * Remove_comments - function replaces first instance of '#' with '\0'
- * @Buf: address of the string to modify
- *
- * Return: Always 0;
+ * _erratoi - Converts a str to an integer
+ * @s: the str to be converted
+ * Return: 0 if no num in string, converted number otherwise
+ *       -1 on error
  */
-void Remove_comments(char *Buf)
+int _erratoi(char *s)
 {
-	int s;
+	int i = 0;
+	unsigned long int result = 0;
 
-	for (s = 0; Buf[s] != '\0'; s++)
-		if (Buf[s] == '#' && (!s || Buf[s - 1] == ' '))
+	if (*s == '+')
+		s++;  /* TODO: why does this make main return 255? */
+	for (i = 0;  s[i] != '\0'; i++)
+	{
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			Buf[s] = '\0';
-			break;
+			result *= 10;
+			result += (s[i] - '0');
+			if (result > INT_MAX)
+				return (-1);
 		}
+		else
+			return (-1);
+	}
+	return (result);
 }
 
 /**
- * Print_d - funct prints a decimal (integer) number (base 10)
- * @Input: the input
- * @fd: the filedescriptor to write to
- * Return: number of characters printed
+ * print_error - Prints an error message
+ * @info: the parameter & return info struct
+ * @estr: string containing specified error type
+ * Return: 0 if no numbers in string, converted number otherwise
+ *        -1 on error
  */
-int Print_d(int Input, int fd)
+void print_error(info_t *info, char *estr)
+{
+	_eputs(info->fname);
+	_eputs(": ");
+	print_d(info->line_count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(info->argv[0]);
+	_eputs(": ");
+	_eputs(estr);
+}
+
+/**
+ * print_d - Function prints a decimal (integer) number (base 10)
+ * @input: the input
+ * @fd: the filedescriptor to write to
+ *
+ * Return: number of char printed
+ */
+int print_d(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
-	int a;
-	int count = 0;
+	int a, count = 0;
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
 		__putchar = _eputchar;
-	if (Input < 0)
+	if (input < 0)
 	{
-		_abs_ = -Input;
+		_abs_ = -input;
 		__putchar('-');
 		count++;
 	}
 	else
-		_abs_ = Input;
+		_abs_ = input;
 	current = _abs_;
 	for (a = 1000000000; a > 1; a /= 10)
 	{
@@ -58,33 +86,33 @@ int Print_d(int Input, int fd)
 }
 
 /**
- * Convert_number - Converter funcT, a clone of itoa
- * @Num: number
- * @Base: base
- * @Flags: argument flags
- * Return: string
+ * convert_number - Converter function, a clone of itoa
+ * @num: Number
+ * @base: Base
+ * @flags: arg flags
+ * Return: str
  */
-char *Convert_number(long int Num, int Base, int Flags)
+char *convert_number(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
 	char sign = 0;
 	char *ptr;
-	unsigned long n = Num;
+	unsigned long n = num;
 
-	if (!(Flags & CONVERT_UNSIGNED) && Num < 0)
+	if (!(flags & CONVERT_UNSIGNED) && num < 0)
 	{
-		n = -Num;
+		n = -num;
 		sign = '-';
 
 	}
-	array = Flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	ptr = &buffer[49];
 	*ptr = '\0';
 
 	do	{
-		*--ptr = array[n % Base];
-		n /= Base;
+		*--ptr = array[n % base];
+		n /= base;
 	} while (n != 0);
 
 	if (sign)
@@ -93,48 +121,19 @@ char *Convert_number(long int Num, int Base, int Flags)
 }
 
 /**
- * Print_error - Prints an error message
- * @Info: the parameter & return info structure
- * @Estr: str containing specified err type
- * Return: if no numbers in string then 0, converted number otherwise
- *        -1 on error
+ * remove_comments - function replaces first instance of '#' with '\0'
+ * @buf: address of the string to modify
+ * Return: 0 Always
  */
-void Print_error(info_t *Info, char *Estr)
+void remove_comments(char *buf)
 {
-	_eputs(Info->fname);
-	_eputs(": ");
-	print_d(Info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(Info->argv[0]);
-	_eputs(": ");
-	_eputs(Estr);
-}
+	int a;
 
-/**
- * _Erratoi - converts a str to an int
- * @x: The str to be converted
- * Return: if no numbers in string then 0, converted number otherwise
- *       -1 on error
- */
-int _Erratoi(char *x)
-{
-	int a = 0;
-	unsigned long int result = 0;
-
-	if (*x == '+')
-		x++;
-	for (a = 0;  x[a] != '\0'; a++)
-	{
-		if (x[a] >= '0' && x[a] <= '9')
+	for (a = 0; buf[a] != '\0'; a++)
+		if (buf[a] == '#' && (!a || buf[a - 1] == ' '))
 		{
-			result *= 10;
-			result += (x[a] - '0');
-			if (result > INT_MAX)
-				return (-1);
+			buf[a] = '\0';
+			break;
 		}
-		else
-			return (-1);
-	}
-	return (result);
 }
 

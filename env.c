@@ -2,7 +2,7 @@
 
 /**
  * get_environ - Returns the str array copy of our environ
- * @info: Struc containing potential arg. Used to maintain
+ * @info: Structure containing potential arg. Used to maintain
  *          const function prototype.
  * Return: 0 Always
  */

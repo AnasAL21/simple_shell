@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * input_buf - Buffers chained commands
- * @info: Parameter structure
+ * input_buf - buf chained commands
+ * @info: parameter structure
  * @buf: Address of buffer
- * @len: Address of len var
+ * @len: Address of length var
  *
  * Return: bytes read
  */
@@ -44,54 +44,54 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 }
 
 /**
- * get_input - Gets a line minus the newline
- * @info: Parameter structure
- * Return: Bytes read
+ * get_input - gets a line minus the newline
+ * @info: parameter structure
+ * Return: bytes read
  */
 ssize_t get_input(info_t *info)
 {
-	static char *buf;
+	static char *buf; /* the ';' command chain buffer */
 	static size_t a, j, len;
 	ssize_t r = 0;
 	char **buf_p = &(info->arg), *p;
 
 	_putchar(BUF_FLUSH);
 	r = input_buf(info, &buf, &len);
-	if (r == -1)
+	if (r == -1) /* EOF */
 		return (-1);
-	if (len)
+	if (len) /* we have commands left in the chain buffer */
 	{
-		j = a;
-		p = buf + a;
+		j = a; /* init new iterator to current buf position */
+		p = buf + a; /* get pointer for return */
 
 		check_chain(info, buf, &j, a, len);
-		while (j < len)
+		while (j < len) /* iterate to semicolon or end */
 		{
 			if (is_chain(info, buf, &j))
 				break;
 			j++;
 		}
 
-		a = j + 1;
+		a = j + 1; /* increment past nulled ';'' */
 		if (a >= len)
 		{
 			a = len = 0;
 			info->cmd_buf_type = CMD_NORM;
 		}
 
-		*buf_p = p;
+		*buf_p = p; /* pass back pointer to current command position */
 		return (_strlen(p));
 	}
 
-	*buf_p = buf;
-	return (r);
+	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */
+	return (r); /* return len of buf from _getline() */
 }
 
 /**
- * read_buf - reads a buffer
- * @info: parameter struct
- * @buf: buffer
- * @a: size
+ * read_buf - Reads a Buffer
+ * @info: Parameter structure
+ * @buf: Buf
+ * @a: Size
  *
  * Return: r
  */
@@ -110,8 +110,9 @@ ssize_t read_buf(info_t *info, char *buf, size_t *a)
 /**
  * _getline - Gets the next line of input from STDIN
  * @info: Parameter structure
- * @ptr: Address of pointer to buff, preallocated or NULL
- * @length: Size of preallocated ptr buff if not NULL
+ * @ptr: Address of ptr to buf, preallocated or NULL
+ * @length: Size of preallocated pointer buf if not NULL
+ *
  * Return: s
  */
 int _getline(info_t *info, char **ptr, size_t *length)
@@ -154,9 +155,10 @@ int _getline(info_t *info, char **ptr, size_t *length)
 }
 
 /**
- * sigintHandler - Blocks Ctrl - C
+ * sigintHandler - Blocks ctrl-C
  * @sig_num: The signal number
- * Return: Nothing
+ *
+ * Return: nothing
  */
 void sigintHandler(__attribute__((unused))int sig_num)
 {
